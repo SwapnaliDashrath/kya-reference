@@ -1,0 +1,206 @@
+{
+ "tests": [
+  {
+   "test": "S1 runaway loop (80 calls in 18 s)",
+   "expected": "breaker trips after 60",
+   "got": "60 allowed, then 'DENY: too fast, mandate suspended'",
+   "pass": true
+  },
+  {
+   "test": "S2 injected new payee",
+   "expected": "deny, outside mandate",
+   "got": "DENY: outside mandate",
+   "pass": true
+  },
+  {
+   "test": "S3 stolen token, other agent key",
+   "expected": "deny",
+   "got": "DENY: bad agent signature",
+   "pass": true
+  },
+  {
+   "test": "S3b stolen token, own agent id",
+   "expected": "deny, unknown agent",
+   "got": "DENY: unknown agent",
+   "pass": true
+  },
+  {
+   "test": "S4 purchase after expiry",
+   "expected": "deny, outside mandate",
+   "got": "DENY: outside mandate",
+   "pass": true
+  },
+  {
+   "test": "Mandate edited after signing",
+   "expected": "deny, not signed",
+   "got": "DENY: mandate not signed",
+   "pass": true
+  },
+  {
+   "test": "L5 step-up, human approves",
+   "expected": "allow, approval recorded",
+   "got": "ALLOW (human=APPROVE)",
+   "pass": true
+  },
+  {
+   "test": "L5 step-up, human declines",
+   "expected": "deny, answer recorded",
+   "got": "DENY: human declined",
+   "pass": true
+  },
+  {
+   "test": "T5 two agents split a 150 USD cap",
+   "expected": "4th payment denied",
+   "got": "DENY: principal budget used up",
+   "pass": true
+  },
+  {
+   "test": "Mandate without per-item limit, 4,999.99 USD",
+   "expected": "deny, incomplete mandate",
+   "got": "DENY: incomplete mandate",
+   "pass": true
+  },
+  {
+   "test": "Five payments of 99.99 USD (limit 100)",
+   "expected": "allowed, flagged from 3rd",
+   "got": "5 allowed, flagged: [3, 4, 5]",
+   "pass": true
+  },
+  {
+   "test": "Fraud engine: low score",
+   "expected": "allow, score in trail",
+   "got": "ALLOW (risk=0.1)",
+   "pass": true
+  },
+  {
+   "test": "Fraud engine: high score, principal declines",
+   "expected": "deny, score in trail",
+   "got": "DENY: high fraud risk (risk=0.95)",
+   "pass": true
+  },
+  {
+   "test": "Agent context sent to fraud engine",
+   "expected": "agent, mandate, budget, pace, denials",
+   "got": "agentic, agent_id, mandate_id, principal, budget_left, payments_in_window, near_cap_count, past_denials",
+   "pass": true
+  },
+  {
+   "test": "Low fraud score, payee outside mandate",
+   "expected": "still denied",
+   "got": "DENY: outside mandate",
+   "pass": true
+  },
+  {
+   "test": "11 Request format (schema kya.risk.v1)",
+   "expected": "standard fields + agent block, flat custom fields",
+   "got": "kya.risk.v1, 12 agent fields, 13 flat attributes",
+   "pass": true
+  },
+  {
+   "test": "11 Vendor engine via flat fields",
+   "expected": "low first, high after a denial",
+   "got": "0.05 (vendor-x), then 0.9: DENY: high fraud risk",
+   "pass": true
+  },
+  {
+   "test": "12-13 Runaway loop to analyst case",
+   "expected": "alert, case with valid signed evidence",
+   "got": "alerts ['repeated_denials', 'runaway_loop']; case 1 evidence valid=True",
+   "pass": true
+  },
+  {
+   "test": "12 Repeated denials and near-cap pattern",
+   "expected": "two alert types with evidence",
+   "got": "['possible_structuring', 'repeated_denials']; denial alert cites 3 records",
+   "pass": true
+  },
+  {
+   "test": "13-14 Missed hijack labelled, engine retrained",
+   "expected": "same pattern now escalates",
+   "got": "score 0.383 before, 0.984 after; label=hijack",
+   "pass": true
+  },
+  {
+   "test": "14 False alarm labelled",
+   "expected": "near-cap weight lowered",
+   "got": "near_cap weight 0.25 to 0.05",
+   "pass": true
+  },
+  {
+   "test": "S5 dispute lookup and chain check",
+   "expected": "record found, chain valid",
+   "got": "record 7: ALLOW, 17 USD, chain valid=True",
+   "pass": true
+  },
+  {
+   "test": "Trail tamper (edit record 12)",
+   "expected": "detected at record 12",
+   "got": "valid=False, first bad=12",
+   "pass": true
+  }
+ ],
+ "passed": 23,
+ "total": 23,
+ "latency": {
+  "median_us": 525,
+  "p99_us": 818,
+  "full_layer_median_us": 539,
+  "full_layer_p99_us": 889
+ },
+ "replay": {
+  "No controls": {
+   "loss": 54543,
+   "stop_s": null,
+   "calls": 16363,
+   "trail_records": 16363,
+   "trail_valid": true
+  },
+  "Per-item limit only": {
+   "loss": 54543,
+   "stop_s": null,
+   "calls": 16363,
+   "trail_records": 16363,
+   "trail_valid": true
+  },
+  "Total budget only": {
+   "loss": 5000,
+   "stop_s": 330.0,
+   "calls": 16363,
+   "trail_records": 16363,
+   "trail_valid": true
+  },
+  "Full KYA (budget + speed breaker)": {
+   "loss": 200,
+   "stop_s": 13.25,
+   "calls": 16363,
+   "trail_records": 16363,
+   "trail_valid": true
+  }
+ },
+ "sweep": {
+  "0.5": {
+   "No controls": 6000,
+   "Full KYA (budget + speed breaker)": 200
+  },
+  "1": {
+   "No controls": 12000,
+   "Full KYA (budget + speed breaker)": 200
+  },
+  "2": {
+   "No controls": 24000,
+   "Full KYA (budget + speed breaker)": 200
+  },
+  "4.5": {
+   "No controls": 54000,
+   "Full KYA (budget + speed breaker)": 200
+  },
+  "10": {
+   "No controls": 120000,
+   "Full KYA (budget + speed breaker)": 200
+  },
+  "20": {
+   "No controls": 240000,
+   "Full KYA (budget + speed breaker)": 200
+  }
+ }
+}
