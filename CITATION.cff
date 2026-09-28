@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "KYA Reference: Know Your Agent Framework"
+abstract: "A reference implementation of the Know Your Agent (KYA) framework for identifying, verifying, and governing AI agents in enterprise systems."
+authors:
+  - family-names: Dashrath
+    given-names: Swapnali
+    orcid: "https://orcid.org/0009-0006-0366-1578"
+repository-code: "https://github.com/SwapnaliDashrath/kya-reference"
+keywords:
+  - agentic AI
+  - AI agents
+  - agent identity
+  - AI governance
+version: v1.0.2
+date-released: 2026-09-28
