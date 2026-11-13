@@ -1,7 +1,7 @@
 # Know Your Agent (KYA) reference implementation
 
 Research prototype accompanying the paper "When AI Agents Pay: A Know Your Agent
-Governance Architecture" (IEEE AIEI 2027 submission).
+Governance Architecture" (IEEE ICSE 2027 submission).
 
 KYA is a governance and orchestration layer. It sits on top of the risk and fraud
 systems banks already run and makes them agent-aware (Fig. 1 of the paper).
