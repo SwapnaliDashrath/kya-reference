@@ -1,6 +1,7 @@
-"""Table III (comparison with existing controls) and the slow-loop runs for the KYA paper.
+"""Comparison with common controls (Table II) and the slow-loop runs (Table IV) of the KYA paper.
 
-Usage:  python kya_table3.py /path/to/kya-reference
+Usage:  python kya_table3.py            (when this file sits next to kya_ref.py)
+        python kya_table3.py /path/to/kya-reference
 Writes kya_table3_results.json next to this script. Does not touch kya_results.json.
 
 Setups
@@ -11,7 +12,8 @@ Setups
   kya         : the real Checkpoint from kya_ref.py.
 """
 import json, math, sys, os
-sys.path.insert(0, sys.argv[1])
+# Folder that holds kya_ref.py. Defaults to the folder this script is in.
+sys.path.insert(0, sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.abspath(__file__)))
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from kya_ref import AgentRegistry, DecisionTrail, Checkpoint, Mandate, Agent, canon

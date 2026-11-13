@@ -1,10 +1,11 @@
 # Know Your Agent (KYA) reference implementation
 
-Research prototype accompanying the paper "When AI Agents Pay: A Know Your Agent
-Governance Architecture" (IEEE ICSE 2027 submission).
+Research prototype accompanying the paper "Know Your Agent: Verifiable Delegation for
+AI Agents That Pay" (submitted to AGENT 2027, the workshop on agentic engineering at
+ICSE 2027).
 
 KYA is a governance and orchestration layer. It sits on top of the risk and fraud
-systems banks already run and makes them agent-aware (Fig. 1 of the paper).
+systems banks already run and makes them agent-aware.
 
 ## Files
 
@@ -23,6 +24,8 @@ systems banks already run and makes them agent-aware (Fig. 1 of the paper).
     and `RiskLayer`, which wires them to the checkpoint.
 - `kya_eval.py`: 23 functional tests, latency benchmarks, and a replay of a runaway-agent
   incident. Writes `kya_results.json` and `kya_curves.json`.
+- `kya_table3.py`: comparison with two common controls (Table II of the paper) and the
+  slow-loop runs (Table IV). Writes `kya_table3_results.json`.
 - `fig_from_ref.py`: draws the replay chart.
 
 ## Connecting a real fraud engine
@@ -44,7 +47,20 @@ systems banks already run and makes them agent-aware (Fig. 1 of the paper).
 
     pip install cryptography matplotlib numpy
     python kya_eval.py
+    python kya_table3.py
     python fig_from_ref.py
+
+`kya_eval.py` reproduces the functional tests, the replay (Table III) and the latency
+figures. Latency depends on the machine. The numbers in the paper and in
+`kya_results.json` come from an Intel Core i5-4300M (2.60 GHz, 2 cores), Windows 10
+and Python 3.14.3. `kya_table3.py` uses no timing, so its output is the same on any
+machine.
+
+## What the prototype leaves out
+
+The paper's design includes replay protection (nonce and timestamp), reserve-then-commit
+across replicas, reinstatement and revocation calls, the sub-agent rule, and external
+anchoring of the trail. These are not implemented here. See Section III-E of the paper.
 
 This is not production payment software. Workloads are synthetic, and the reference
 engine is a stand-in for a real fraud engine.

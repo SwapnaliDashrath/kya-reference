@@ -142,10 +142,10 @@
  "passed": 23,
  "total": 23,
  "latency": {
-  "median_us": 525,
-  "p99_us": 818,
-  "full_layer_median_us": 539,
-  "full_layer_p99_us": 889
+  "median_us": 632,
+  "p99_us": 888,
+  "full_layer_median_us": 654,
+  "full_layer_p99_us": 796
  },
  "replay": {
   "No controls": {
