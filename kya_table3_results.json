@@ -1,0 +1,82 @@
+{
+ "table3": {
+  "Token only": {
+   "Injected payee": "allowed",
+   "Stolen token": "allowed",
+   "Expired mandate": "blocked",
+   "Edited mandate": "blocked",
+   "Runaway loop": "allowed (80 of 80)",
+   "Two agents split a budget": "allowed (4 of 4)",
+   "Single oversized payment": "allowed"
+  },
+  "Token + per-item limit": {
+   "Injected payee": "allowed",
+   "Stolen token": "allowed",
+   "Expired mandate": "blocked",
+   "Edited mandate": "blocked",
+   "Runaway loop": "allowed (80 of 80)",
+   "Two agents split a budget": "allowed (4 of 4)",
+   "Single oversized payment": "blocked"
+  },
+  "KYA": {
+   "Injected payee": "blocked",
+   "Stolen token": "blocked",
+   "Expired mandate": "blocked",
+   "Edited mandate": "blocked",
+   "Runaway loop": "blocked after 60 of 80",
+   "Two agents split a budget": "blocked after 3 of 4",
+   "Single oversized payment": "blocked"
+  }
+ },
+ "slow_loop": [
+  {
+   "rate_per_s": 0.05,
+   "loss_1h_usd": 603,
+   "final_loss_usd": 3603,
+   "stopped_at_s": null,
+   "stopped_by": null
+  },
+  {
+   "rate_per_s": 0.1,
+   "loss_1h_usd": 1203,
+   "final_loss_usd": 5000,
+   "stopped_at_s": 15000.0,
+   "stopped_by": "DENY: budget used up"
+  },
+  {
+   "rate_per_s": 0.19,
+   "loss_1h_usd": 2283,
+   "final_loss_usd": 5000,
+   "stopped_at_s": 7894.7,
+   "stopped_by": "DENY: budget used up"
+  },
+  {
+   "rate_per_s": 0.2,
+   "loss_1h_usd": 2403,
+   "final_loss_usd": 5000,
+   "stopped_at_s": 7500.0,
+   "stopped_by": "DENY: budget used up"
+  },
+  {
+   "rate_per_s": 0.21,
+   "loss_1h_usd": 200,
+   "final_loss_usd": 200,
+   "stopped_at_s": 285.7,
+   "stopped_by": "DENY: too fast, mandate suspended"
+  },
+  {
+   "rate_per_s": 0.25,
+   "loss_1h_usd": 200,
+   "final_loss_usd": 200,
+   "stopped_at_s": 240.0,
+   "stopped_by": "DENY: too fast, mandate suspended"
+  },
+  {
+   "rate_per_s": 0.5,
+   "loss_1h_usd": 200,
+   "final_loss_usd": 200,
+   "stopped_at_s": 120.0,
+   "stopped_by": "DENY: too fast, mandate suspended"
+  }
+ ]
+}
